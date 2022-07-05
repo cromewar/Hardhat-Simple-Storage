@@ -13,6 +13,7 @@ async function main() {
 	console.log(`Deployed contract to ${simpleStorage.address}`);
 	// if deploy on hardhat network the contract does not need to get verified
 	if (network.config.chainId === 4 && process.env.ETHERSCAN_API_KEY) {
+		console.log("Waiting for block txes...");
 		await simpleStorage.deployTransaction.wait(6);
 		await verify(simpleStorage.address, []);
 	}
@@ -30,7 +31,7 @@ async function main() {
 }
 
 async function verify(contractAddress, args) {
-	console.log("Verifying Contract..   ");
+	console.log("Verifying Contract...");
 	try {
 		await run("verify:verify", {
 			address: contractAddress,
